@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  background: #666;
+  font-family: 'Lato', sans-serif; }
+
+nav {
+  float: left;
+  width: 350px;
+  margin: 0;
+  background: #eee; }
+
+nav ul {
+  list-style: none;
+  padding: 0px; }
+
+nav li {
+  float: none;
+  width: 100%; }
+
+nav li a {
+  display: block;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  text-decoration: none;
+  color: #444; }
+
+nav li a:hover { 
+  border-bottom: 0px;
+  color: #fff; }
+
+nav li:nth-child(5n) a { border-left: 10px solid #BAC358; }
+
+nav li:nth-child(5n+1) a { border-left: 10px solid #62BDCF; }
+
+nav li:nth-child(5n+2) a { border-left: 10px solid #E05735; }
+
+nav li:nth-child(5n+3) a { border-left: 10px solid #af821b; }
+
+nav li:nth-child(5n+4) a { border-left: 10px solid #837D63; }
+
+nav li a:after {
+  content: "";
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 0px;
+  position: absolute;
+  transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  z-index: -1; }
+
+nav li a:hover:after { width: 100%; }
+
+nav li:nth-child(5n) a:after { background: #BAC358; }
+
+nav li:nth-child(5n+1) a:after { background: #62BDCF; }
+
+nav li:nth-child(5n+2) a:after { background: #E05735; }
+
+nav li:nth-child(5n+3) a:after { background: #af821b; }
+
+nav li:nth-child(5n+4) a:after { background: #837D63; }
+
+.sum{
+  position: fixed;
+  top: 50%; /* Отступ в процентах от верхнего края окна */
+  left: 50%; /* Отступ в процентах от левого края окна */
+  width: 250px; /* Ширина блока */
+  height: 150px; /* Высота блока */
+  margin-top: -75px; /* Отрицательный отступ от верхнего края страницы, должен равняться половине высоты блока со знаком минус */
+  /*margin-left: -225px;  Отрицательный отступ от левого края страницы, должен равняться половине высоты блока со знаком минус */
+  text-align: center;
+
+   text-shadow: 0px 5px 8px #3333FF;
+   filter: dropshadow(color=#3333FF, offx=0, offy=5);
+
+
+  border:hidden 5px #000000;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright:5px;
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-top-left-radius:5px;
+  -webkit-border-top-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  border-bottom-left-radius:5px;
+  border-bottom-right-radius:5px;
+
+  font-size: 2em;
+  color: #BBA845;
+  background-color: #274999;
+  box-shadow: 3px 3px 10px 5px #000;
+}
+p{
+  margin: 0;
+}
+h1{
+  font-size: 3em;
+  margin: 0;
+}

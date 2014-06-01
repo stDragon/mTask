@@ -1,0 +1,36 @@
+<% layout('layout/page') -%>
+<% block('title', "Список заявок") -%>
+
+<script src="/vendor/bower_components/socket.io-client/dist/socket.io.js"></script>
+
+<div id="room">
+  <ul class="list-unstyled"></ul>
+
+
+<div class="table-responsive">
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th>#Код </th>
+          <th>Дата</th>
+          <th>Имя</th>
+          <th>Заявка</th>
+          <th>Срочность</th>
+          <th>Статус</th>
+          <th>Выполнено</th>
+        </tr>
+      </thead>
+      <tbody id="request">
+
+      </tbody>
+    </table>
+ </div>
+
+
+<!--   <form>
+    <input disabled class="form-control" autocomplete="off" autofocus placeholder="Сообщение...">
+  </form> -->
+</div>
+
+
+
