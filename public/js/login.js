@@ -1,18 +1,21 @@
-var ul = $('#room ul');
-var input = $('#description');
+var ul = $('#room > ul');
 var form = $('#room form');
 
-var tbody = $('#request');
+var description = $('#description');
+
+var table = $('#request-list');
+var tbody = $('#request-list tbody');
+
+// var newRequest = new Object();
+
+// newRequest.description = description;
 
 var socket = io.connect('', {
   reconnect: false
 });
 
 socket
-    // .on('message', function(username, message) {
-    //   printMessage(username + "> " + message);
-    // })
-    .on('message', function(username, message) {
+    .on('message', function(username, message, data, urgency) {
       printMessage(username + "> " + message);
     })
     .on('leave', function(username) {
@@ -24,12 +27,12 @@ socket
     .on('connect', function() {
       printStatus("соединение установлено");
       form.on('submit', sendMessage);
-      input.prop('disabled', false);
+      description.prop('disabled', false);
     })
     .on('disconnect', function() {
       printStatus("соединение потеряно");
       form.off('submit', sendMessage);
-      input.prop('disabled', true);
+      description.prop('disabled', true);
       this.$emit('error');
     })
     .on('logout', function() {
@@ -46,9 +49,31 @@ socket
     });
 
 function sendMessage() {
-  var text = input.val();
+  var text = description.val();
   socket.emit('message', text, function() {
-    printMessage("вы> " + text);
+    printMessage(text);
+  });
+
+  description.val('');
+  return false;
+}
+
+
+function sendRequest() {
+  var newRequest = new Object();
+
+  // newRequest.kod = table.rows.length;
+  newRequest.kod = document.getElementsByTagName('table').item(0).getElementsByTagName('tr').length || 1;
+  newRequest.username = user;
+
+  newRequest.text = input.val();
+  newRequest.date = new Date(year);
+  newRequest.urgency = 'chtlyt';
+
+
+
+  socket.emit('message', newRequest, function() {
+    printMessage(newRequest);
   });
 
   input.val('');
@@ -59,23 +84,24 @@ function printStatus(status) {
   $('<li>').append($('<i>').text(status)).appendTo(ul);
 }
 
+function printMessage(newRequest) {
+  $('#request-list tbody:last')
+    .append('<tr><td>'+ newRequest.kid +'</td><td>'+ newRequest.data +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.text +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>');
+}
 // function printMessage(text) {
-//   $('<li>').text(text).appendTo(ul);
+//   $('#request-list tbody:last')
+//     .append(text);
 // }
 
-function sendRequest() {
-  var text = input.val();
-  socket.emit('message', text, function() {
-    printMessage(text);
-  });
-
-  input.val('');
-  return false;
-}
-
-function printMessage(text) {
-  $('<td>').text(text).appendTo(tbody);
-}
+// function addTableRow(jQtable){
+//   jQtable.each(function(){
+//     var tds = '<tr>';
+//     jQuery.each($('tr:last td', this), function() {tds += '<td>'+$(this).html()+'</td>';});
+//     tds += '</tr>';
+//     if($('tbody', this).length > 0){$('tbody', this).append(tds);
+//     }else {$(this).append(tds);}
+//   });
+// }
 
 // <div class="table-responsive">
 //     <table class="table table-striped">
