@@ -1,21 +1,20 @@
 var ul = $('#room > ul');
 var form = $('#room form');
+// var input = $('#room input');
 
 var description = $('#description');
 
 var table = $('#request-list');
 var tbody = $('#request-list tbody');
 
-// var newRequest = new Object();
-
-// newRequest.description = description;
+// newRequest.kod = table.rows.length;
 
 var socket = io.connect('', {
   reconnect: false
 });
 
 socket
-    .on('message', function(username, message, data, urgency) {
+    .on('message', function(username, message) {
       printMessage(username + "> " + message);
     })
     .on('leave', function(username) {
@@ -26,12 +25,12 @@ socket
     })
     .on('connect', function() {
       printStatus("соединение установлено");
-      form.on('submit', sendMessage);
+      form.on('submit', sendRequest);
       description.prop('disabled', false);
     })
     .on('disconnect', function() {
       printStatus("соединение потеряно");
-      form.off('submit', sendMessage);
+      form.off('submit', sendRequest);
       description.prop('disabled', true);
       this.$emit('error');
     })
@@ -48,35 +47,24 @@ socket
       }
     });
 
-function sendMessage() {
-  var text = description.val();
-  socket.emit('message', text, function() {
-    printMessage(text);
-  });
-
-  description.val('');
-  return false;
+function getRequest() {
+  var newRequest = new Object();
+newRequest.kod = document.getElementsByTagName('tbody').item(0).getElementsByTagName('tr').length || 0;
+newRequest.date = new Date();
+// newRequest.username = username;
+newRequest.request = description.val();
+newRequest.urgency = 'срочность';
+console.log(newRequest);
+return newRequest;
 }
 
-
 function sendRequest() {
-  var newRequest = new Object();
-
-  // newRequest.kod = table.rows.length;
-  newRequest.kod = document.getElementsByTagName('table').item(0).getElementsByTagName('tr').length || 1;
-  newRequest.username = user;
-
-  newRequest.text = input.val();
-  newRequest.date = new Date(year);
-  newRequest.urgency = 'chtlyt';
-
-
-
+  var newRequest = getRequest();
   socket.emit('message', newRequest, function() {
     printMessage(newRequest);
   });
 
-  input.val('');
+  description.val('');
   return false;
 }
 
@@ -86,43 +74,5 @@ function printStatus(status) {
 
 function printMessage(newRequest) {
   $('#request-list tbody:last')
-    .append('<tr><td>'+ newRequest.kid +'</td><td>'+ newRequest.data +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.text +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>');
+    .append('<tr><td>'+ newRequest.kod +'</td><td>'+ newRequest.date +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.request +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>');
 }
-// function printMessage(text) {
-//   $('#request-list tbody:last')
-//     .append(text);
-// }
-
-// function addTableRow(jQtable){
-//   jQtable.each(function(){
-//     var tds = '<tr>';
-//     jQuery.each($('tr:last td', this), function() {tds += '<td>'+$(this).html()+'</td>';});
-//     tds += '</tr>';
-//     if($('tbody', this).length > 0){$('tbody', this).append(tds);
-//     }else {$(this).append(tds);}
-//   });
-// }
-
-// <div class="table-responsive">
-//     <table class="table table-striped">
-//       <tbody>
-//         <tr class="alert alert-success">
-//           <td>#0001</td>
-//           <td>20.02.2014</td>
-//           <td>Иванов И.И.</td>
-//           <td>Неисправна сеть</td>
-//           <td>стандартно</td>
-//           <td>обработка</td>
-//           <td></td>
-//         </tr>
-//         <tr class="alert alert-success">
-//           <td>#0011</td>
-//           <td>20.02.2014</td>
-//           <td>Иванов И.И.</td>
-//           <td>Неисправна сеть</td>
-//           <td>стандартно</td>
-//           <td>обработка</td>
-//           <td></td>
-//         </tr>
-
-
