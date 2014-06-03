@@ -121,9 +121,10 @@ module.exports = function(server) {
 
     socket.broadcast.emit('join', username);
 
-    socket.on('message', function(text, cb) {
-      socket.broadcast.emit('message', username, text);
-      cb && cb();
+    socket.on('message', function(dataRequest, cb) {
+      dataRequest.username = username;
+      socket.broadcast.emit('message', dataRequest);
+      cb && cb(dataRequest);
     });
 
     socket.on('disconnect', function() {

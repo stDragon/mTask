@@ -14,8 +14,9 @@ var socket = io.connect('', {
 });
 
 socket
-    .on('message', function(username, message) {
-      printMessage(username + "> " + message);
+    .on('message', function(newRequest) {
+      console.log(newRequest.username);
+      printMessage(newRequest);
     })
     .on('leave', function(username) {
       printStatus(username + " вышел из системы");
@@ -47,22 +48,26 @@ socket
       }
     });
 
-function getRequest() {
+function formingRequest() {
   var newRequest = new Object();
-newRequest.kod = document.getElementsByTagName('tbody').item(0).getElementsByTagName('tr').length || 0;
-newRequest.date = new Date();
-// newRequest.username = username;
-newRequest.request = description.val();
-newRequest.urgency = 'срочность';
-console.log(newRequest);
-return newRequest;
+  newRequest.kod = document.getElementsByTagName('tbody').item(0).getElementsByTagName('tr').length || 0;
+  newRequest.date = new Date();
+  //newRequest.username = username;
+  newRequest.request = description.val();
+  newRequest.urgency = 'срочность';
+
+  return newRequest;
+}
+
+function formingMessage(newRequest){
+  return '<tr><td>'+ newRequest.kod +'</td><td>'+ newRequest.date +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.request +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>'
 }
 
 function sendRequest() {
-  var newRequest = getRequest();
+  var newRequest = formingRequest();
   socket.emit('message', newRequest, function() {
-    printMessage(newRequest);
-  });
+  printMessage(newRequest);
+});
 
   description.val('');
   return false;
@@ -73,6 +78,7 @@ function printStatus(status) {
 }
 
 function printMessage(newRequest) {
+  var text =formingMessage(newRequest);
   $('#request-list tbody:last')
-    .append('<tr><td>'+ newRequest.kod +'</td><td>'+ newRequest.date +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.request +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>');
+    .append(text);
 }
