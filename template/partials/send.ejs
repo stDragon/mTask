@@ -7,7 +7,7 @@
 <!--        <div class="control-group">
          <label class="control-label" for="username">Контактное лицо</label>
          <div class="controls">
-           <input type="text" id="username" name="username" placeholder="Ф И О" class="input-xlarge form-control">
+           <input type="text" id="username" name="username" placeholder=username class="input-xlarge form-control">
          </div>
        </div> -->
     
@@ -51,22 +51,20 @@
 -->
 
        <div class="control-group">
-         <label class="control-label" for="urgency">Уровень срочности</label>
+         <label class="control-label">Уровень срочности</label>
 
        <div class="controls">
-        <div class="btn-group ">
-              <button type="button" class="btn btn-default">Средний</button>
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-         <span class="caret"></span>
-         <span class="sr-only">Меню с переключением</span>
-         </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Минимальный</a></li>
-                <li><a href="#">Средний</a></li>
-                <li><a href="#">Высокий</a></li>
-              </ul>
+          <div class="btn-group">
+            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" id="urgency">средний <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">минимальный</a></li>
+              <li><a href="#">средний</a></li>
+              <li><a href="#">высокий</a></li>
+              <!-- <li class="divider"></li>
+              <li><a href="#">Other</a></li> -->
+            </ul>
           </div>
-         </div>
+        </div>
 
          <!-- 
            <input type="text" id="urgency" name="urgency" placeholder="" class="input-xlarge form-control">

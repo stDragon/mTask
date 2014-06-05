@@ -9,6 +9,11 @@ var tbody = $('#request-list tbody');
 
 // newRequest.kod = table.rows.length;
 
+$(".dropdown-menu li a").click(function(){
+  var selText = $(this).text();
+  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+});
+
 var socket = io.connect('', {
   reconnect: false
 });
@@ -52,9 +57,9 @@ function formingRequest() {
   var newRequest = new Object();
   newRequest.kod = document.getElementsByTagName('tbody').item(0).getElementsByTagName('tr').length || 0;
   newRequest.date = new Date();
-  //newRequest.username = username;
+  // newRequest.username = username;
   newRequest.request = description.val();
-  newRequest.urgency = 'срочность';
+  newRequest.urgency = $("#urgency").text();
 
   return newRequest;
 }
@@ -65,7 +70,7 @@ function formingMessage(newRequest){
 
 function sendRequest() {
   var newRequest = formingRequest();
-  socket.emit('message', newRequest, function() {
+  socket.emit('message', newRequest, function(newRequest) {
   printMessage(newRequest);
 });
 
