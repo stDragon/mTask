@@ -2,7 +2,11 @@
   <ul class="nav navbar-nav">
     <li><a href="/">Главная</a></li>
     <% if (user) { %>
-    <li><a href="/chat">Чат</a></li>
+    <li><a href="/chat">Заявки</a></li>
+    <% } %>
+    <% if (user) { %>
+    <li><a href="/user">Управнение пользователями</a></li>
+    <li><a href="/handbook">Справочник неисправностей</a></li>
     <% } %>
   </ul>
   <ul class="nav navbar-nav navbar-right">

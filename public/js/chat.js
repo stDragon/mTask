@@ -7,8 +7,6 @@ var description = $('#description');
 var table = $('#request-list');
 var tbody = $('#request-list tbody');
 
-// newRequest.kod = table.rows.length;
-
 $(".dropdown-menu li a").click(function(){
   var selText = $(this).text();
   $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
@@ -57,15 +55,17 @@ function formingRequest() {
   var newRequest = new Object();
   newRequest.kod = document.getElementsByTagName('tbody').item(0).getElementsByTagName('tr').length || 0;
   newRequest.date = new Date();
-  // newRequest.username = username;
   newRequest.request = description.val();
   newRequest.urgency = $("#urgency").text();
+  newRequest.category = $("#category").text();
+  newRequest.status = " ";
+  newRequest.complite = " " ;
 
   return newRequest;
 }
 
 function formingMessage(newRequest){
-  return '<tr><td>'+ newRequest.kod +'</td><td>'+ newRequest.date +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.request +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>'
+  return '<tr><td>'+ newRequest.kod +'</td><td>'+ newRequest.date +'</td><td>'+ newRequest.username +'</td><td>'+ newRequest.request +'</td><td>'+ newRequest.urgency +'</td><td>'+ newRequest.category +'</td><td>'+ newRequest.status +'</td><td>'+ newRequest.complite +'</td></tr>'
 }
 
 function sendRequest() {
